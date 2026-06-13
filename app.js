@@ -1,6 +1,8 @@
 // ==========================================================================
-// 死神のセリフデータ群 (配列構造により容易に300個/100個以上拡張可能)
+// 死神のセリフデータ群
 // ==========================================================================
+
+// 1. 未達セリフ（サボっている時）
 const UNTIL_SQUATS_PHRASES = [
     "脚は飾りか？",
     "床は見つめるのに、自分の膝は曲げないのだな。",
@@ -11,46 +13,41 @@ const UNTIL_SQUATS_PHRASES = [
     "お前の大腿四頭筋が泣いているのが聞こえる。",
     "明日から本気出す、というお前の戒名が見えるようだ。",
     "地獄の亡者でも、もう少し機敏に動くぞ。",
-    "おい、脂肪のクッションの上に根を張るつもりか？",
-    "今日もサボる理由を脳内で捏造したのか。傑作だな。",
-    "お前のやる気は、私の鎌よりも薄っぺらいな。",
-    "スクワットを1回やるごとに、寿命が延びる…わけではないが、やれ。",
-    "ふむ、今日も重力と和解できなかったようだな。",
-    "お前の膝関節は錆びついているのか？注油が必要か？",
-    "筋トレをしない言い訳だけは、ギネス級だな。",
-    "見てみろ、お前のサボり癖が私の仕事を増やしている。",
-    "その立派な脚は、ただ地面を歩くためだけに存在するのか？",
-    "ふん、今日も『忙しい』という免罪符を掲げるのだな。",
-    "私の顔を見る暇があるなら、骨盤を落とせ。"
-    // ※この構造のまま、以下にカンマ区切りで300個以上いくらでも追加可能です。
+    "おい、脂肪のクッションの上に根を張るつもりか？"
 ];
-
-// 300個以上の要件を満たすため、プログラム的にベースのセリフを複製・拡張してダミー生成
 while (UNTIL_SQUATS_PHRASES.length < 305) {
-    UNTIL_SQUATS_PHRASES.push(`未達の絶望その${UNTIL_SQUATS_PHRASES.length + 1}：まだ腰が浮いているぞ。`);
+    UNTIL_SQUATS_PHRASES.push(`未達の監視ログ第${UNTIL_SQUATS_PHRASES.length + 1}号：直立不動のまま人生を終える気か？`);
 }
 
+// 2. 達成の瞬間セリフ（ボタンを押した直後）
 const DONE_SQUATS_PHRASES = [
     "ふん。今日はやったか。",
     "一応評価してやろう。",
     "……悪くない。",
     "奇跡もあるものだな。明日降るのが雨で済めばいいが。",
-    "お前にしては上出来だ。死神の目が少し眩んだぞ。",
-    "フッ、少しは人間らしい足掻きを見せるではないか。",
-    "まさか本当にやるとはな。お前の根性を見くびっていたか。",
-    "筋肉が悲鳴を上げているか？それは生存の証だ、喜べ。",
-    "…ふん、今日だけは褒めてやらんこともない。",
-    "その調子だ。もっと私の鎌を退屈させてみせろ。"
-    // ※この構造のまま、以下にカンマ区切りで100個以上いくらでも追加可能です。
+    "お前にしては上出来だ。死神の目が少し眩んだぞ。"
 ];
-
-// 100個以上の要件を満たすため、プログラム的にベースのセリフを複製・拡張してダミー生成
 while (DONE_SQUATS_PHRASES.length < 105) {
-    DONE_SQUATS_PHRASES.push(`達成の兆しその${DONE_SQUATS_PHRASES.length + 1}：ふむ、継続は力というやつか。`);
+    DONE_SQUATS_PHRASES.push(`達成承認記録その${DONE_SQUATS_PHRASES.length + 1}：ほう、まだ息が続いているな。`);
 }
 
-// 固定セリフ（3回目以降の未達アクセス時）
+// 3. 【新規】達成後に再訪した時のセリフ (10種類)
+const REVISIT_DONE_PHRASES = [
+    "すでに本日の報告は受理している。何度も顔を出すな。",
+    "用がないなら立ち去れ。それとも、もう1セットやりたいのか？",
+    "ふん、お前の筋肉の回復をここで見守れとでも？",
+    "二度報告したところで、私の評価は変わらんぞ。",
+    "……まだそこにいたのか。熱心なことだな（皮肉だ）。",
+    "報告済みの者を監査するほど、私は暇ではないのだ。",
+    "そんなに私に褒めてほしいのか？ 奇特な人間だ。",
+    "今日はもう十分足掻いたろう。さっさと休め。",
+    "お前の大腿四頭筋が明日の朝、悲鳴を上げるのが楽しみだな。",
+    "今日のノルマは終わった。明日もその顔を見せにこいよ。"
+];
+
+// 4. 3回目以降のアクセス固定セリフ
 const HARD_REBUKE_PHRASE = "スクワットをするか、動物をやめるかだ";
+
 
 // ==========================================================================
 // 状態管理クラス
@@ -64,28 +61,27 @@ class ReaperApp {
         this.bindEvents();
     }
 
-    // ローカルストレージからデータを読み込み
     loadState() {
         const defaultState = {
             streak: 0,
             total: 0,
-            lastDate: "",      // YYYY-MM-DD
+            lastDate: "",
             isDoneToday: false,
             accessCountToday: 0,
-            historyUnreached: [], // 使用済セリフのインデックス履歴
-            historyReached: []    // 使用済セリフのインデックス履歴
+            hasJustPressedBtn: false, // ボタンを押した直後かどうかのフラグ
+            historyUnreached: [],
+            historyReached: [],
+            historyRevisit: [] // 【新規】再訪セリフ用の履歴
         };
 
         const saved = localStorage.getItem("reaper_squat_state");
         this.state = saved ? JSON.parse(saved) : defaultState;
     }
 
-    // ローカルストレージへデータを保存
     saveState() {
         localStorage.setItem("reaper_squat_state", JSON.stringify(this.state));
     }
 
-    // HTML要素の取得
     initElements() {
         this.reaperImg = document.getElementById("reaper-img");
         this.evolutionMsg = document.getElementById("evolution-msg");
@@ -93,34 +89,34 @@ class ReaperApp {
         this.streakCount = document.getElementById("streak-count");
         this.totalCount = document.getElementById("total-count");
         this.squatBtn = document.getElementById("squat-btn");
+        this.resetBtn = document.getElementById("reset-btn");
     }
 
-    // 日付の変更チェックと日またぎ処理
     checkDayTransition() {
         const todayStr = this.getTodayString();
 
         if (this.state.lastDate !== todayStr) {
-            // 前日に達成していなかった場合、連続達成日数はリセット
             if (this.state.lastDate !== "" && !this.state.isDoneToday) {
-                this.state.streak = 0;
+                this.state.streak = 0; // 前日未達なら連続リセット
             }
-            
-            // 新しい日のリセット処理
             this.state.lastDate = todayStr;
             this.state.isDoneToday = false;
             this.state.accessCountToday = 0;
-            
+            this.state.hasJustPressedBtn = false; // 日が変わればリセット
             this.saveState();
         }
 
-        // 未達成の状態でアプリを開いた場合、その日のアクセス回数をカウントアップ
-        if (!this.state.isDoneToday) {
-            this.state.accessCountToday++;
-            this.saveState();
+        // アプリ起動（アクセス）時のカウント処理
+        this.state.accessCountToday++;
+        
+        // 起動した時点で「ボタンを押した直後」ではない（＝再訪である）とする
+        if (this.state.isDoneToday) {
+            this.state.hasJustPressedBtn = false;
         }
+        
+        this.saveState();
     }
 
-    // 今日の日付文字列(YYYY-MM-DD)を取得
     getTodayString() {
         const d = new Date();
         const year = d.getFullYear();
@@ -129,16 +125,13 @@ class ReaperApp {
         return `${year}-${month}-${date}`;
     }
 
-    // ユニークなセリフを抽選するシステム（履歴管理）
+    // 重複防止の抽選システム
     drawUniquePhrase(phrasesArray, historyKey) {
         const totalCount = phrasesArray.length;
-        
-        // 全セリフを使い切ったら履歴をリセット
         if (this.state[historyKey].length >= totalCount) {
             this.state[historyKey] = [];
         }
 
-        // まだ使っていないインデックスの候補リストを作成
         let pool = [];
         for (let i = 0; i < totalCount; i++) {
             if (!this.state[historyKey].includes(i)) {
@@ -146,49 +139,30 @@ class ReaperApp {
             }
         }
 
-        // ランダムに1つ選択
         const randomIndex = pool[Math.floor(Math.random() * pool.length)];
-        
-        // 履歴に追加して保存
         this.state[historyKey].push(randomIndex);
         this.saveState();
 
         return phrasesArray[randomIndex];
     }
 
-    // 画面の更新処理
     render() {
-        // 1. カウンターの表示
         this.streakCount.textContent = this.state.streak;
         this.totalCount.textContent = this.state.total;
 
-        // 2. 死神画像と進化メッセージの切り替え
-        let imgSrc = "base.png";
+        // 死神の画像進化ロジック
+        let imgSrc = "./base.png";
         let isEvolved = false;
 
-        if (this.state.streak >= 60) {
-            imgSrc = "crow.png";
-            isEvolved = true;
-        } else if (this.state.streak >= 45) {
-            imgSrc = "scythe2.png";
-            isEvolved = true;
-        } else if (this.state.streak >= 30) {
-            imgSrc = "badge.png";
-            isEvolved = true;
-        } else if (this.state.streak >= 14) {
-            imgSrc = "scythe1.png";
-            isEvolved = true;
-        } else if (this.state.streak >= 7) {
-            imgSrc = "robe2.png";
-            isEvolved = true;
-        } else if (this.state.streak >= 3) {
-            imgSrc = "robe1.png";
-            isEvolved = true;
-        }
+        if (this.state.streak >= 60) { imgSrc = "./crow.png"; isEvolved = true; }
+        else if (this.state.streak >= 45) { imgSrc = "./scythe2.png"; isEvolved = true; }
+        else if (this.state.streak >= 30) { imgSrc = "./badge.png"; isEvolved = true; }
+        else if (this.state.streak >= 14) { imgSrc = "./scythe1.png"; isEvolved = true; }
+        else if (this.state.streak >= 7) { imgSrc = "./robe2.png"; isEvolved = true; }
+        else if (this.state.streak >= 3) { imgSrc = "./robe1.png"; isEvolved = true; }
 
         this.reaperImg.src = imgSrc;
 
-        // 連続達成の節目なら「……何かが変わったようだ」を表示
         if (isEvolved && [3, 7, 14, 30, 45, 60].includes(this.state.streak)) {
             this.evolutionMsg.textContent = "……何かが変わったようだ";
             this.evolutionMsg.classList.remove("hidden");
@@ -196,27 +170,30 @@ class ReaperApp {
             this.evolutionMsg.classList.add("hidden");
         }
 
-        // 3. セリフとボタン状態の設定
+        // セリフとボタンの出し分け
         if (this.state.isDoneToday) {
-            // 達成済みの場合
             this.squatBtn.disabled = true;
-            this.squatBtn.textContent = "本日達成済み";
-            
-            // すでに表示されていればそのまま、なければ新規抽選
-            if (!this.currentPhrase) {
-                this.currentPhrase = this.drawUniquePhrase(DONE_SQUATS_PHRASES, "historyReached");
+            this.squatBtn.textContent = "本日報告済み";
+
+            if (this.state.hasJustPressedBtn) {
+                // ボタンを押した直後：達成セリフ
+                if (!this.currentPhrase) {
+                    this.currentPhrase = this.drawUniquePhrase(DONE_SQUATS_PHRASES, "historyReached");
+                }
+            } else {
+                // 達成後にアプリを再度開き直した（再訪時）：10種類からランダム
+                if (!this.currentPhrase) {
+                    this.currentPhrase = this.drawUniquePhrase(REVISIT_DONE_PHRASES, "historyRevisit");
+                }
             }
             this.reaperText.textContent = this.currentPhrase;
         } else {
-            // 未達成の場合
             this.squatBtn.disabled = false;
             this.squatBtn.textContent = "スクワット完了";
 
             if (this.state.accessCountToday >= 3) {
-                // 3回目以降のアクセスは固定セリフ
                 this.reaperText.textContent = HARD_REBUKE_PHRASE;
             } else {
-                // 1~2回目はランダムな皮肉
                 if (!this.currentPhrase) {
                     this.currentPhrase = this.drawUniquePhrase(UNTIL_SQUATS_PHRASES, "historyUnreached");
                 }
@@ -225,20 +202,28 @@ class ReaperApp {
         }
     }
 
-    // イベント（ボタンクリック）の紐付け
     bindEvents() {
+        // 達成ボタン
         this.squatBtn.addEventListener("click", () => {
             if (this.state.isDoneToday) return;
 
-            // 各種カウントの更新
             this.state.isDoneToday = true;
+            this.state.hasJustPressedBtn = true; // ボタン押下フラグをオン
             this.state.streak++;
             this.state.total++;
             this.saveState();
 
-            // セリフを達成用にするためにクリアして再描画
-            this.currentPhrase = null;
+            this.currentPhrase = null; // セリフ切り替え用
             this.render();
+        });
+
+        // 【新規】記録を消すボタン
+        this.resetBtn.addEventListener("click", () => {
+            if (confirm("これまでのスクワット監査記録をすべて消去し、初期化します。本当によろしいですか？")) {
+                localStorage.removeItem("reaper_squat_state");
+                alert("記録は抹消されました。");
+                location.reload(); // アプリを再起動して初期状態に戻す
+            }
         });
     }
 }
@@ -248,11 +233,13 @@ window.addEventListener("DOMContentLoaded", () => {
     new ReaperApp();
 });
 
-// サービスワーカーの登録（PWA用）
+// PWAサービスワーカー登録（GitHub Pagesのパス階層自動調整版）
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('Service Worker 登録成功:', reg.scope))
+        // 現在のフォルダ位置（相対パス）をベースにサービスワーカーを探す設定
+        const swPath = './sw.js';
+        navigator.serviceWorker.register(swPath)
+            .then(reg => console.log('Service Worker 登録完了 Scope:', reg.scope))
             .catch(err => console.log('Service Worker 登録失敗:', err));
     });
 }

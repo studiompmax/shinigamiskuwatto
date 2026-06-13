@@ -1,40 +1,38 @@
-const CACHE_NAME = 'reaper-squat-v1';
+const CACHE_NAME = 'reaper-squat-v2';
 const ASSETS = [
-  'index.html',
-  'style.css',
-  'app.js',
-  'manifest.json',
-  'base.png',
-  'robe1.png',
-  'robe2.png',
-  'scythe1.png',
-  'badge.png',
-  'scythe2.png',
-  'crow.png',
-  'icon-192.png',
-  'icon-512.png'
+  './index.html',
+  './style.css',
+  './app.js',
+  './manifest.json',
+  './base.png',
+  './robe1.png',
+  './robe2.png',
+  './scythe1.png',
+  './badge.png',
+  './scythe2.png',
+  './crow.png',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
-// インストール時にファイルをキャッシュ
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then((cache) => {
-        console.log('アセットをキャッシュ中...');
+        console.log('PWA資産キャッシュ中...');
         return cache.addAll(ASSETS);
       })
       .then(() => self.skipWaiting())
   );
 });
 
-// アクティベート時に古いキャッシュを削除
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cache) => {
           if (cache !== CACHE_NAME) {
-            console.log('古いキャッシュを削除:', cache);
+            console.log('古いキャッシュを消去します:', cache);
             return caches.delete(cache);
           }
         })
@@ -43,12 +41,10 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// オフライン時はキャッシュからページを返す（ネットワークファースト、失敗したらキャッシュ）
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        // 正常に取得できたらキャッシュを更新して返す
         if (response.status === 200) {
           const resClone = response.clone();
           caches.open(CACHE_NAME).then((cache) => {
@@ -58,7 +54,6 @@ self.addEventListener('fetch', (event) => {
         return response;
       })
       .catch(() => {
-        // ネットワークエラー（オフラインなど）の時はキャッシュを返す
         return caches.match(event.request);
       })
   );
