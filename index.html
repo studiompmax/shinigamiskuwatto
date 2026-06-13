@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>死神スクワット</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="死神スクワット">
+    <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+    <div class="app-container">
+        <div class="reaper-area">
+            <div class="image-wrapper">
+                <img id="reaper-img" src="base.png" alt="死神の姿">
+            </div>
+            <div id="evolution-msg" class="evolution-msg hidden"></div>
+        </div>
+
+        <div class="dialogue-box">
+            <p id="reaper-text">Loading...</p>
+        </div>
+
+        <div class="stats-container">
+            <div class="stat-box">
+                <span class="stat-label">連続達成</span>
+                <span id="streak-count" class="stat-value">0</span>
+                <span class="stat-unit">日</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">累計達成</span>
+                <span id="total-count" class="stat-value">0</span>
+                <span class="stat-unit">回</span>
+            </div>
+        </div>
+
+        <div class="action-area">
+            <button id="squat-btn" class="btn-primary">スクワット完了</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

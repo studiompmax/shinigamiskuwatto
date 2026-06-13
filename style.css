@@ -1,0 +1,175 @@
+/* リセットと全体設定 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent; /* スマホのタップ時ハイライトを消す */
+}
+
+body {
+    background-color: #0b090c; /* 深い黒 */
+    color: #e2e0e5;
+    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* アプリ全体のコンテナ（スマホ画面サイズにフィットさせる） */
+.app-container {
+    width: 100%;
+    max-width: 450px;
+    height: 100vh;
+    max-height: 900px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    background: linear-gradient(180deg, #0b090c 0%, #16121a 100%);
+}
+
+/* 死神画像エリア */
+.reaper-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    min-height: 200px;
+}
+
+.image-wrapper {
+    width: 70%;
+    max-width: 250px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(138, 43, 226, 0.4)); /* 紫の後光効果 */
+}
+
+/* 進化時メッセージ */
+.evolution-msg {
+    margin-top: 10px;
+    color: #00ffcc;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-shadow: 0 0 8px rgba(0, 255, 204, 0.6);
+    animation: pulse 2s infinite;
+}
+
+/* セリフウィンドウ */
+.dialogue-box {
+    background-color: rgba(26, 21, 32, 0.85);
+    border: 2px solid #8a2be2; /* 紫のアウトライン */
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 110px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    box-shadow: inset 0 0 10px rgba(138, 43, 226, 0.2), 0 4px 15px rgba(0,0,0,0.5);
+}
+
+#reaper-text {
+    font-size: 1.05rem;
+    line-height: 1.6;
+    letter-spacing: 0.05em;
+    text-align: center;
+    width: 100%;
+    word-break: break-all;
+}
+
+/* ステータスエリア */
+.stats-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-box {
+    flex: 1;
+    background: #1f1a26;
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+    border-bottom: 3px solid #4a157d;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.75rem;
+    color: #a29ba8;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #bc95ff;
+    text-shadow: 0 0 10px rgba(188, 149, 255, 0.3);
+}
+
+.stat-unit {
+    font-size: 0.8rem;
+    color: #a29ba8;
+    margin-left: 2px;
+}
+
+/* 完了ボタン */
+.action-area {
+    width: 100%;
+    padding-bottom: env(safe-area-inset-bottom); /* iPhoneのノッチ対応 */
+}
+
+.btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, #8a2be2 0%, #4a157d 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 15px;
+    padding: 18px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+    background: linear-gradient(135deg, #7624c1 0%, #3d1169 100%);
+}
+
+.btn-primary:disabled {
+    background: #2d2833;
+    color: #686170;
+    border-bottom: none;
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ユーティリティ */
+.hidden {
+    display: none !important;
+}
+
+/* アニメーション */
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}

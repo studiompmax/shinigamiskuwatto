@@ -1,0 +1,21 @@
+{
+  "short_name": "死神スクワット",
+  "name": "死神スクワット - 監視型筋トレ習慣化アプリ",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "index.html",
+  "background_color": "#0b090c",
+  "theme_color": "#8a2be2",
+  "display": "standalone",
+  "orientation": "portrait"
+}
