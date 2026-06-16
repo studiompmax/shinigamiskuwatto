@@ -2,7 +2,7 @@
 // 死神のセリフデータ群
 // ==========================================================================
 
-// 1. 未達セリフ（サボっている時）
+// 1. 未達セリフ
 const UNTIL_SQUATS_PHRASES = [
     "脚は飾りか？",
     "床は見つめるのに、自分の膝は曲げないのだな。",
@@ -19,7 +19,7 @@ while (UNTIL_SQUATS_PHRASES.length < 305) {
     UNTIL_SQUATS_PHRASES.push(`未達の監視ログ第${UNTIL_SQUATS_PHRASES.length + 1}号：直立不動のまま人生を終える気か？`);
 }
 
-// 2. 達成の瞬間セリフ（ボタンを押した直後）
+// 2. 達成の瞬間セリフ
 const DONE_SQUATS_PHRASES = [
     "ふん。今日はやったか。",
     "一応評価してやろう。",
@@ -31,7 +31,7 @@ while (DONE_SQUATS_PHRASES.length < 105) {
     DONE_SQUATS_PHRASES.push(`達成承認記録その${DONE_SQUATS_PHRASES.length + 1}：ほう、まだ息が続いているな。`);
 }
 
-// 3. 【新規】達成後に再訪した時のセリフ (10種類)
+// 3. 達成後に再訪した時のセリフ (10種類)
 const REVISIT_DONE_PHRASES = [
     "すでに本日の報告は受理している。何度も顔を出すな。",
     "用がないなら立ち去れ。それとも、もう1セットやりたいのか？",
@@ -68,10 +68,10 @@ class ReaperApp {
             lastDate: "",
             isDoneToday: false,
             accessCountToday: 0,
-            hasJustPressedBtn: false, // ボタンを押した直後かどうかのフラグ
+            hasJustPressedBtn: false,
             historyUnreached: [],
             historyReached: [],
-            historyRevisit: [] // 【新規】再訪セリフ用の履歴
+            historyRevisit: []
         };
 
         const saved = localStorage.getItem("reaper_squat_state");
@@ -97,19 +97,17 @@ class ReaperApp {
 
         if (this.state.lastDate !== todayStr) {
             if (this.state.lastDate !== "" && !this.state.isDoneToday) {
-                this.state.streak = 0; // 前日未達なら連続リセット
+                this.state.streak = 0; 
             }
             this.state.lastDate = todayStr;
             this.state.isDoneToday = false;
             this.state.accessCountToday = 0;
-            this.state.hasJustPressedBtn = false; // 日が変わればリセット
+            this.state.hasJustPressedBtn = false; 
             this.saveState();
         }
 
-        // アプリ起動（アクセス）時のカウント処理
         this.state.accessCountToday++;
         
-        // 起動した時点で「ボタンを押した直後」ではない（＝再訪である）とする
         if (this.state.isDoneToday) {
             this.state.hasJustPressedBtn = false;
         }
@@ -125,7 +123,6 @@ class ReaperApp {
         return `${year}-${month}-${date}`;
     }
 
-    // 重複防止の抽選システム
     drawUniquePhrase(phrasesArray, historyKey) {
         const totalCount = phrasesArray.length;
         if (this.state[historyKey].length >= totalCount) {
@@ -150,16 +147,15 @@ class ReaperApp {
         this.streakCount.textContent = this.state.streak;
         this.totalCount.textContent = this.state.total;
 
-        // 死神の画像進化ロジック
-        let imgSrc = "./base.png";
+        let imgSrc = "base.png";
         let isEvolved = false;
 
-        if (this.state.streak >= 60) { imgSrc = "./crow.png"; isEvolved = true; }
-        else if (this.state.streak >= 45) { imgSrc = "./scythe2.png"; isEvolved = true; }
-        else if (this.state.streak >= 30) { imgSrc = "./badge.png"; isEvolved = true; }
-        else if (this.state.streak >= 14) { imgSrc = "./scythe1.png"; isEvolved = true; }
-        else if (this.state.streak >= 7) { imgSrc = "./robe2.png"; isEvolved = true; }
-        else if (this.state.streak >= 3) { imgSrc = "./robe1.png"; isEvolved = true; }
+        if (this.state.streak >= 60) { imgSrc = "crow.png"; isEvolved = true; }
+        else if (this.state.streak >= 45) { imgSrc = "scythe2.png"; isEvolved = true; }
+        else if (this.state.streak >= 30) { imgSrc = "badge.png"; isEvolved = true; }
+        else if (this.state.streak >= 14) { imgSrc = "scythe1.png"; isEvolved = true; }
+        else if (this.state.streak >= 7) { imgSrc = "robe2.png"; isEvolved = true; }
+        else if (this.state.streak >= 3) { imgSrc = "robe1.png"; isEvolved = true; }
 
         this.reaperImg.src = imgSrc;
 
@@ -170,18 +166,15 @@ class ReaperApp {
             this.evolutionMsg.classList.add("hidden");
         }
 
-        // セリフとボタンの出し分け
         if (this.state.isDoneToday) {
             this.squatBtn.disabled = true;
             this.squatBtn.textContent = "本日報告済み";
 
             if (this.state.hasJustPressedBtn) {
-                // ボタンを押した直後：達成セリフ
                 if (!this.currentPhrase) {
                     this.currentPhrase = this.drawUniquePhrase(DONE_SQUATS_PHRASES, "historyReached");
                 }
             } else {
-                // 達成後にアプリを再度開き直した（再訪時）：10種類からランダム
                 if (!this.currentPhrase) {
                     this.currentPhrase = this.drawUniquePhrase(REVISIT_DONE_PHRASES, "historyRevisit");
                 }
@@ -203,43 +196,29 @@ class ReaperApp {
     }
 
     bindEvents() {
-        // 達成ボタン
         this.squatBtn.addEventListener("click", () => {
             if (this.state.isDoneToday) return;
 
             this.state.isDoneToday = true;
-            this.state.hasJustPressedBtn = true; // ボタン押下フラグをオン
+            this.state.hasJustPressedBtn = true;
             this.state.streak++;
             this.state.total++;
             this.saveState();
 
-            this.currentPhrase = null; // セリフ切り替え用
+            this.currentPhrase = null;
             this.render();
         });
 
-        // 【新規】記録を消すボタン
         this.resetBtn.addEventListener("click", () => {
             if (confirm("これまでのスクワット監査記録をすべて消去し、初期化します。本当によろしいですか？")) {
                 localStorage.removeItem("reaper_squat_state");
                 alert("記録は抹消されました。");
-                location.reload(); // アプリを再起動して初期状態に戻す
+                location.reload();
             }
         });
     }
 }
 
-// アプリの起動
 window.addEventListener("DOMContentLoaded", () => {
     new ReaperApp();
 });
-
-// PWAサービスワーカー登録（GitHub Pagesのパス階層自動調整版）
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        // 現在のフォルダ位置（相対パス）をベースにサービスワーカーを探す設定
-        const swPath = './sw.js';
-        navigator.serviceWorker.register(swPath)
-            .then(reg => console.log('Service Worker 登録完了 Scope:', reg.scope))
-            .catch(err => console.log('Service Worker 登録失敗:', err));
-    });
-}

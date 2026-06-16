@@ -4,36 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>死神スクワット</title>
-    <link rel="stylesheet" href="./style.css">
-    <link rel="manifest" href="./manifest.json">
-    <!-- iOS用の設定 -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="死神スクワット">
-    <link rel="apple-touch-icon" href="./icon-192.png">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="app-container">
-        <!-- 役所の窓口イメージのヘッダー -->
         <header class="office-header">
             <h1 class="office-title">死神監査局</h1>
             <p class="office-subtitle">対象者は本日の運動実施状況を報告してください</p>
         </header>
 
-        <!-- 死神グラフィックエリア -->
         <div class="reaper-area">
             <div class="image-wrapper">
-                <img id="reaper-img" src="./base.png" alt="死神の姿">
+                <img id="reaper-img" src="base.png" alt="死神の姿">
             </div>
             <div id="evolution-msg" class="evolution-msg hidden"></div>
         </div>
 
-        <!-- セリフウィンドウ -->
         <div class="dialogue-box">
             <p id="reaper-text">Loading...</p>
         </div>
 
-        <!-- ステータス表示 -->
         <div class="stats-container">
             <div class="stat-box">
                 <span class="stat-label">連続達成</span>
@@ -47,18 +37,16 @@
             </div>
         </div>
 
-        <!-- アクションボタン -->
         <div class="action-area">
             <button id="squat-btn" class="btn-primary">スクワット完了</button>
             <button id="reset-btn" class="btn-reset">記録を消す</button>
         </div>
 
-        <!-- 最下部の免責事項 -->
         <footer class="disclaimer-area">
             <p>【免責事項】本サイトは個人のトレーニング記録のための個人プロジェクトです。記載内容は作者の経験に基づくものであり、専門的な指導ではありません。運動は自己責任にて行ってください。利用によるいかなる損害についても作者は責任を負いません。</p>
         </footer>
     </div>
 
-    <script src="./app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
