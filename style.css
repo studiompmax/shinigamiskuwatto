@@ -161,14 +161,21 @@ body {
     margin-bottom: 20px;
 }
 
-.btn-primary {
+/* 上段ボタンの横並び設定 */
+.main-buttons {
+    display: flex;
+    gap: 10px;
     width: 100%;
+}
+
+.btn-primary {
+    flex: 2; /* 完了ボタンを大きめに */
     background: linear-gradient(135deg, #8a2be2 0%, #4a157d 100%);
     color: #ffffff;
     border: none;
     border-radius: 12px;
     padding: 16px;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
     letter-spacing: 0.1em;
     cursor: pointer;
@@ -176,13 +183,27 @@ body {
     transition: transform 0.1s;
 }
 
-.btn-primary:active {
+.btn-secondary {
+    flex: 1; /* まだボタン */
+    background: #2a1f35;
+    color: #bc95ff;
+    border: 1px solid #8a2be2;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-secondary:active, .btn-primary:active {
     transform: scale(0.98);
 }
 
-.btn-primary:disabled {
+.btn-primary:disabled, .btn-secondary:disabled {
     background: #2d2833;
     color: #686170;
+    border: none;
     box-shadow: none;
     cursor: not-allowed;
     transform: none;
