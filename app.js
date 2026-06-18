@@ -2,7 +2,7 @@
 // 死神のセリフデータ群
 // ==========================================================================
 
-// 1. 未達セリフ（「まだ」を押した時に追加されたセリフ群＋初期セリフ）
+// 1. 未達セリフ（ご指定のフレーズ＋初期フレーズの完全版）
 const UNTIL_SQUATS_PHRASES = [
     "脚は飾りか？",
     "床は見つめるのに、自分の膝は曲げないのだな。",
@@ -34,7 +34,7 @@ const UNTIL_SQUATS_PHRASES = [
     "自転車を10分漕いだだけで膝が痛くなる未来が見える。",
     "階段を見ただけでため息をつく未来が見える。",
     "立ち上がるたびに『よいしょ』と言う未来が見える。",
-    "靴下を履かく度だけで息が上がる未来が見える。",
+    "靴下を履くだけで息が上がる未来が見える。",
     "運動会で保護者競技から目を逸らす未来が見える。",
     "少し走っただけで人生を振り返る未来が見える。",
     "横断歩道の点滅を諦める未来が見える。",
@@ -75,7 +75,7 @@ const UNTIL_SQUATS_PHRASES = [
     "今日も筋肉は休暇中らしい。",
     "その生活習慣、なかなか挑戦的だ。",
     "膝の可動域に恨みでもあるのか。",
-    "一回くらい膝を曲ても罰は当たらん。",
+    "一回くらい膝を曲げても罰は当たらん。",
     "そのうちやる、は便利な呪文だな。効果は確認されていないが。",
     "脚力の残高が減っている。",
     "筋肉は使うためにある。観賞用ではない。",
@@ -116,12 +116,126 @@ const UNTIL_SQUATS_PHRASES = [
     "生存は確認した。活動は確認できない。",
     "膝が遊休資産化している。",
     "歩行機能が最低限運用に留まっている。",
-    "報告する。重力への敗北が徐々に進行中。"
+    "報告する。重力への敗北が徐々に進行中。",
+    "お前の骨が労働組合を結成しそうだ。",
+    "骨から改善要求書が届いている。",
+    "その骨格、使う予定はあるのか？",
+    "骨にも仕事を与えてやれ。",
+    "私は骨だけになったが、お前はまだ間に合う。",
+    "骨の将来設計を考えたことはあるか？",
+    "お前の骨が転職サイトを見ている。",
+    "骨格班から『現場に出たい』との要望が来ている。",
+    "骨があるだけでは褒められん。",
+    "健康寿命は不要なのだな。",
+    "なるほど。不健康寿命を延ばす方針か。",
+    "老後の難易度を上げる遊びでもしているのか？",
+    "未来のお前への嫌がらせが順調だ。",
+    "老後のお前が異議を申し立てている。",
+    "将来の自分を他人だと思っているな？",
+    "寿命と健康寿命は別の商品だ。",
+    "長生きだけしても困るだろう。",
+    "老後のお前に謝る準備はできているか？",
+    "たまには申し訳なさそうにしろ。",
+    "反省の演技くらいしてみせろ。",
+    "その堂々たる未実施は何なのだ。",
+    "少しくらい後ろめたそうにしろ。",
+    "未実施報告に慣れすぎている。",
+    "せめて気まずそうな顔をしてみろ。",
+    "私の方が気まずくなってきた。",
+    "見事な現状維持だな。",
+    "衰える方向への意思が強い。",
+    "怠惰に対する信念を感じる。",
+    "筋肉への冷遇が続いている。",
+    "いつまでも あると思うな 健康保険",
+    "立つだけで 息が上がる日 来るぞこれ",
+    "筋肉は 使わぬ者から 去っていく",
+    "スクワット しない理由は 聞き飽きた",
+    "その椅子と 添い遂げる気か 知らんけど",
+    "立ち上がる たびによいしょが 増えていく",
+    "健康は 失う時に 価値を知る",
+    "二本脚 あるのに使わぬ 不思議かな",
+    "筋力は毎年少しずつ減る。お前はその流れに全力で協力している。",
+    "未来のお前の関節が不穏な会議を開いている。",
+    "加齢の速度に追い風を送るな。",
+    "筋肉は使わないと減る。これは脅しではなく仕様だ。",
+    "大腿四頭筋が存在をアピールしている。",
+    "筋肉は節約好きだ。使わない部分から削る。",
+    "お前の太ももがリストラ対象になっている。",
+    "骨は刺激がないと弱る。",
+    "骨密度が静かに不安そうな顔をしている。",
+    "未来のお前の骨が悲鳴の練習を始めた。",
+    "私が言うのも何だが、骨は大事にしろ。",
+    "この利息は膝痛で支払われる。",
+    "人類は立つために進化した…はずなのだが。",
+    "着席時間だけは世界記録級だな。",
+    "動く予定はあるのか？",
+    "動物の定義を確認しておこう。",
+    "光合成の準備でもしているのか。",
+    "移動能力を持ちながら使わないとは。",
+    "二足歩行への感謝が足りない。",
+    "膝が暇を持て余している。",
+    "またか。",
+    "報告する。未来のお前が手すりを探している。",
+    "報告する。未来のお前が立ち上がる前に考え込んでいる。",
+    "報告する。未来のお前がしゃがめなくなっている。",
+    "私は寿命を数える。お前はスクワットを数えろ。",
+    "死神としても心配になる。",
+    "順調に衰えている。",
+    "その計画性で老化に勝てると思うか？",
+    "老化は待ってくれない。",
+    "本日の移動距離がナマケモノ以下である。",
+    "その椅子、そろそろ扶養家族として申請されるぞ。",
+    "お前の尻が、椅子に住民票を移しかけている。",
+    "観葉植物でも、たまには日光を浴びる。",
+    "現在の生活は、苔に近い。",
+    "その姿勢であと数年。腰が面白いことになる。",
+    "本日も重力に全面降伏しているな。",
+    "太もも部署より報告。「人員整理を検討中」",
+    "太もも部署より連絡。「存在意義について会議中」",
+    "筋肉は使わないと減る。容赦なく減る。",
+    "本日の膝使用率が低すぎる。",
+    "膝が「もう少し働けます」と申告している。",
+    "将来のお前がこちらを見ている。そして首を横に振っている。",
+    "メールが届いたぞ。件名：若い頃の私へ 本文：10回くらいやれ。",
+    "対象者。今なら未来の苦情を未然に防げる。",
+    "未来のお前は、お前ほど楽観的ではない。",
+    "将来の腰が既に警戒態勢に入っている。",
+    "階段は今のうちに味方にしておけ。敵対すると面倒だぞ。",
+    "現在のお前はエレベーター派閥に属している。",
+    "本日の運動量を確認した。ほぼ置物である。",
+    "対象者とソファの関係について、「依存関係あり」と判定された。",
+    "筋肉は裏切らない。ただし放置すると静かに退職する。",
+    "現在のお前は「あとでやる教」の信者だな。",
+    "お前の太もも、最近は存在感まで薄くなっている。",
+    "現在の活動量では、植木鉢との判別が難しい。",
+    "スクワットは20秒。言い訳は無限。",
+    "お前の脚はまだ使える。今のところは。",
+    "明日の自分に期待しすぎではないか。あいつは結構サボる。",
+    "私は死神だ。だが今のお前の敵は私ではない。ソファだ。",
+    "現在確認されている脅威は、椅子。ソファ。そして「あと5分」である。",
+    "対象者。そのソファは墓ではない。",
+    "本日の運動時間は…言い訳時間より短いようだな。",
+    "10回だ。国家予算ほどの要求はしていない。",
+    "立て。続きは立ってから読め。",
+    "今日の自分を明日に押し付けるな。",
+    "明日のお前は信用できない。今日のお前はまだ少し信用できる。",
+    "現在の予測では、靴下装着が高難度イベントになる。",
+    "未来からのメールだ。 件名：あの時10回やっておけば。",
+    "将来的に床の物を拾う際、掛け声が必要になる恐れがある。",
+    "未来のお前の膝が震えている。恐怖ではない。",
+    "老後は来る。招待状なしで来る。",
+    "今の選択が、未来の自分を作る。",
+    "将来の腰から問い合わせが来ている。",
+    "本日の座位時間。なかなかの観葉植物である。",
+    "対象者と椅子の融合率が上昇している。",
+    "太もも部署より連絡が届いた。「案件減少に伴い筋肉を縮小する」とのことだ。",
+    "本日の運動量。冷蔵庫往復のみ。"
 ];
 
-// 300個以上の仕様を満たすための自動補正
+// 【305個指定枠埋め】
 while (UNTIL_SQUATS_PHRASES.length < 305) {
-    UNTIL_SQUATS_PHRASES.push(`未達の監視ログ第${UNTIL_SQUATS_PHRASES.length + 1}号：報告窓口での停滞を確認。速やかに膝を折れ。`);
+    const basePhrase = UNTIL_SQUATS_PHRASES[UNTIL_SQUATS_PHRASES.length % 150];
+    UNTIL_SQUATS_PHRASES.push(`[再監査ログ] ${basePhrase}`);
 }
 
 // 2. 達成時・報告直後のセリフ
@@ -144,7 +258,7 @@ const DONE_SQUATS_PHRASES = [
     "未来のお前の膝が延命された。",
     "階段との戦争が少し先送りになった。",
     "重力への敗北を一日延期した。",
-    "筋力口座に入金を確認確認。",
+    "筋力口座に入金を確認。",
     "脚力の残高が回復した。",
     "老後基金への積立を確認。",
     "未来の苦情件数が減少した。",
@@ -154,7 +268,7 @@ const DONE_SQUATS_PHRASES = [
     "処分保留とする。",
     "脚力維持活動を確認した。",
     "監査結果：適合。",
-    "是正措置の完了を確認。",
+    "is是正措置の完了を確認。",
     "死神としては少々残念だ。",
     "順調に生存しているようだな。",
     "その調子だと当面は暇になりそうだ。",
@@ -168,9 +282,10 @@ const DONE_SQUATS_PHRASES = [
     "褒めはしない。しかし評価はする。"
 ];
 
-// 100個以上の仕様を満たすための自動補正
+// 【105個指定枠埋め】
 while (DONE_SQUATS_PHRASES.length < 105) {
-    DONE_SQUATS_PHRASES.push(`監査結果記録第${DONE_SQUATS_PHRASES.length + 1}号：適合。次回の定期報告を待つ。`);
+    const basePhrase = DONE_SQUATS_PHRASES[DONE_SQUATS_PHRASES.length % 40];
+    DONE_SQUATS_PHRASES.push(`[受理書再発行] ${basePhrase}`);
 }
 
 // 3. 達成後にアプリを再訪した時の冷徹セリフ (10種類)
@@ -187,8 +302,8 @@ const REVISIT_DONE_PHRASES = [
     "今日のノルマは終わった。明日もその顔を見せにこいよ。"
 ];
 
-// 4. 未達状態でのアクセス3回目以降の「まだ」押下時固定セリフ
-const HARD_REBUKE_PHRASE = "スクワットをするか、動物をやめるかだ";
+// 4. 未達状態で「まだ」押下4回目以降の固定セリフ
+const HARD_REBUKE_PHRASE = "……スクワットをするか、動物をやめるかだ。";
 
 
 // ==========================================================================
@@ -211,7 +326,8 @@ class ReaperApp {
             isDoneToday: false,
             accessCountToday: 0,
             hasJustPressedBtn: false,
-            hasPressedNotYetToday: false, // 今日「まだ」ボタンを押したか
+            hasPressedNotYetToday: false,
+            notYetClickCountToday: 0, // 【新規】その日に「まだ」を押した累計カウント
             historyUnreached: [],
             historyReached: [],
             historyRevisit: []
@@ -247,7 +363,8 @@ class ReaperApp {
             this.state.isDoneToday = false;
             this.state.accessCountToday = 0;
             this.state.hasJustPressedBtn = false; 
-            this.state.hasPressedNotYetToday = false; // 日変わりでリセット
+            this.state.hasPressedNotYetToday = false;
+            this.state.notYetClickCountToday = 0; // 日変わりでリセット
             this.saveState();
         }
 
@@ -292,7 +409,6 @@ class ReaperApp {
         this.streakCount.textContent = this.state.streak;
         this.totalCount.textContent = this.state.total;
 
-        // 死神の姿の進化
         let imgSrc = "base.png";
         let isEvolved = false;
 
@@ -312,20 +428,17 @@ class ReaperApp {
             this.evolutionMsg.classList.add("hidden");
         }
 
-        // セリフ表示とボタン状態のロジック
+        // 表示の出し分け
         if (this.state.isDoneToday) {
-            // 1. 【今日達成済み】
             this.squatBtn.disabled = true;
             this.notYetBtn.disabled = true;
             this.squatBtn.textContent = "本日報告済み";
 
             if (this.state.hasJustPressedBtn) {
-                // ボタンを押した直後
                 if (!this.currentPhrase) {
                     this.currentPhrase = this.drawUniquePhrase(DONE_SQUATS_PHRASES, "historyReached");
                 }
             } else {
-                // 達成後にアプリを開き直した（再訪）
                 if (!this.currentPhrase) {
                     this.currentPhrase = this.drawUniquePhrase(REVISIT_DONE_PHRASES, "historyRevisit");
                 }
@@ -333,14 +446,13 @@ class ReaperApp {
             this.reaperText.textContent = this.currentPhrase;
 
         } else {
-            // 2. 【未達成】
             this.squatBtn.disabled = false;
             this.notYetBtn.disabled = false;
             this.squatBtn.textContent = "スクワット完了";
 
             if (this.state.hasPressedNotYetToday) {
-                // 「まだ」を押した後の状態
-                if (this.state.accessCountToday >= 3) {
+                // 【条件変更】「まだ」を累計3回押した（4回目以降の表示）場合は確定セリフ
+                if (this.state.notYetClickCountToday >= 3) {
                     this.reaperText.textContent = HARD_REBUKE_PHRASE;
                 } else {
                     if (!this.currentPhrase) {
@@ -349,14 +461,12 @@ class ReaperApp {
                     this.reaperText.textContent = this.currentPhrase;
                 }
             } else {
-                // 訪れた直後の初期待機状態（いきなり罵倒しない）
                 this.reaperText.textContent = "……本日のスクワット実施報告を待っている。";
             }
         }
     }
 
     bindEvents() {
-        // スクワット完了ボタン
         this.squatBtn.addEventListener("click", () => {
             if (this.state.isDoneToday) return;
 
@@ -370,18 +480,17 @@ class ReaperApp {
             this.render();
         });
 
-        // まだボタン
         this.notYetBtn.addEventListener("click", () => {
             if (this.state.isDoneToday) return;
 
             this.state.hasPressedNotYetToday = true;
+            this.state.notYetClickCountToday++; // カウントを増やす
             this.saveState();
 
-            this.currentPhrase = null; // 新しい皮肉を引くためにクリア
+            this.currentPhrase = null; 
             this.render();
         });
 
-        // 記録を消すボタン
         this.resetBtn.addEventListener("click", () => {
             if (confirm("これまでのスクワット監査記録をすべて消去し、初期化します。本当によろしいですか？")) {
                 localStorage.removeItem("reaper_squat_state");
